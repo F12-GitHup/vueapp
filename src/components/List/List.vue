@@ -1,15 +1,15 @@
 <template>
   <div  class="list">
     <my-header>
-       <a href="#" onClick="javascript :history.back(-1);" slot="left"></a>
-       <a href="" slot="tit">列表</a>
-        <a href="" slot="right">购物车</a>
+       <a class=" iconfont icon-fanhui" href="javascript:;" onClick="javascript :history.back(-1);" slot="left"></a>
+       <a href="javascript:;"  slot="tit">列表</a>
+        <a href="javascript:;"  slot="right">购物车</a>
     </my-header>
     <my-footer></my-footer>
     <my-content>
           <class-list :class-data = "classData" @get-list = "getList"></class-list>
           <Product-list :list-data="listData"></Product-list>
-    </my-content> 
+    </my-content>
   </div>
 </template>
 
@@ -48,8 +48,8 @@ export default {
             console.log(res);
              this.classData = res.data;
          });
-        
-        
+
+
   }
 }
 </script>

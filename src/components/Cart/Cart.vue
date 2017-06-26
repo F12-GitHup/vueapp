@@ -5,7 +5,7 @@
       <a href="" slot="tit">购物车</a>
       <a href="" slot="right">消息</a>
     </my-header>
-   <my-footer></my-footer>
+    <my-footer></my-footer>
    <my-content>
         <div class="sub-header">
           <p>总数量：<span>{{total.totalNum}}</span></p>
@@ -28,7 +28,7 @@ export default {
     }
   },
   //局部注册组件
-  components:{ 
+  components:{
     "my-cart-list":CartList
   },
   methods:{
@@ -52,9 +52,9 @@ export default {
               this.cartData.splice(index,1,{})
             })
          })
-        
+
       }
-      
+
     }
   },
   mounted(){
@@ -70,20 +70,20 @@ export default {
             this.cartData.forEach(function(ele) {
                 //判断
                if(ele.number){
-                  totalNum +=ele.number*1;  
+                  totalNum +=ele.number*1;
                   totalPrice+=ele.number*ele.price*1;
-                  totalPrice=parseInt(totalPrice*100)/100; 
-                 
+                  totalPrice=parseInt(totalPrice*100)/100;
+
 
                }
-               
+
             });
             return{
                 totalNum,
                 totalPrice
             }
         }
-        
+
     }
 }
 </script>

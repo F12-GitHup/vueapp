@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Mine from '@/components/Mine'
-import Index from '@/components/Index'
+import Mine from '@/components/Mine/Mine/Mine'
+import Index from '@/components/Index/Index'
 import List from '@/components/List/List'
 import Cart from '@/components/Cart/Cart'
 
@@ -25,7 +25,7 @@ export default new Router({
       component: Cart
     },
     {
-      path: '/user-center',
+      path: '/mine',
       name: 'Mine',
       component: Mine
     }

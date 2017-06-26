@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    
+
     <router-view></router-view>
   </div>
 </template>
@@ -21,8 +21,9 @@ export default {
   text-align:center;
 }
 *{ margin:0;padding:0;}
-li{list=style:none;}
-a{text-decoration:none;}
+li{list-style:none;}
+a{text-decoration:none;
+  color: #666;}
 .itemRemove {
     overflow: hidden;
     -webkit-animation:removeItem .8s both cubic-bezier(.24,.01,.38,.97);
