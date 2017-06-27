@@ -1,17 +1,23 @@
 <template>
   <div class="cart">
     <my-header>
-       <a href="#" class="iconfont" onClick="javascript :history.back(-1);" slot="left">&#xe660;</a>
       <a href="" slot="tit">购物车</a>
-      <a href="" slot="right">消息</a>
+      <a href="" slot="right">编辑</a>
     </my-header>
+
     <my-footer></my-footer>
+
    <my-content>
-        <div class="sub-header">
-          <p>总数量：<span>{{total.totalNum}}</span></p>
-          <p>需要支付：<span>{{total.totalPrice}}</span>元</p>
-        </div>
-       <my-cart-list :cart-data="cartData" @change-num = "changeNum" ref="cart-list" ></my-cart-list>
+
+
+     <my-no-login-cart></my-no-login-cart>
+
+
+        <!--<div class="sub-header">-->
+          <!--<p>总数量：<span>{{total.totalNum}}</span></p>-->
+          <!--<p>需要支付：<span>{{total.totalPrice}}</span>元</p>-->
+        <!--</div>-->
+       <!--<my-cart-list :cart-data="cartData" @change-num = "changeNum" ref="cart-list" ></my-cart-list>-->
    </my-content>
   </div>
 </template>
@@ -19,6 +25,7 @@
 <script>
 
 import CartList from "./CartList"
+import NoLoginCart from "./NoLoginCart"
 
 export default {
   name: 'cart',
@@ -29,7 +36,8 @@ export default {
   },
   //局部注册组件
   components:{
-    "my-cart-list":CartList
+    "my-cart-list":CartList,
+    "my-no-login-cart":NoLoginCart
   },
   methods:{
     changeNum(type,index){
@@ -90,6 +98,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .cart{
+    height:100%;
+    width:100%;
+  }
 .sub-header{height:40px;background:#ccc;line-height:40px;}
 .sub-header p{float:left;margin-left:20px;}
 .sub-header p span{color:#f10;}
