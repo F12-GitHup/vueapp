@@ -1,23 +1,20 @@
 <template>
   <div class="cart">
     <my-header>
-      <a href="" slot="tit">购物车</a>
-      <a href="" slot="right">编辑</a>
+      <a href="javascript:;" slot="tit">购物车</a>
     </my-header>
 
     <my-footer></my-footer>
 
    <my-content>
 
+     <!--<my-no-cart></my-no-cart>-->
 
-     <my-no-login-cart></my-no-login-cart>
+     <!--<my-no-login-cart></my-no-login-cart>-->
 
+       <my-cart-list :cart-data="cartData"
 
-        <!--<div class="sub-header">-->
-          <!--<p>总数量：<span>{{total.totalNum}}</span></p>-->
-          <!--<p>需要支付：<span>{{total.totalPrice}}</span>元</p>-->
-        <!--</div>-->
-       <!--<my-cart-list :cart-data="cartData" @change-num = "changeNum" ref="cart-list" ></my-cart-list>-->
+       ></my-cart-list>
    </my-content>
   </div>
 </template>
@@ -26,6 +23,7 @@
 
 import CartList from "./CartList"
 import NoLoginCart from "./NoLoginCart"
+import NoCart from "./NoCart"
 
 export default {
   name: 'cart',
@@ -37,60 +35,25 @@ export default {
   //局部注册组件
   components:{
     "my-cart-list":CartList,
-    "my-no-login-cart":NoLoginCart
+    "my-no-login-cart":NoLoginCart,
+    "my-no-cart":NoCart
   },
   methods:{
-    changeNum(type,index){
-      var num = this.cartData[index].number*1;
-      var id = this.cartData[index].goodsID;
-      if(type){
-        //向服务器发送请求
-        this.$http.get(`http://datainfo.duapp.com/shopdata/updatecar.php?userID=lishuai&goodsID=${id}&number=${num}`).then(res=>{
-          //请求成功再改页面的内容
-          this.cartData[index].number=num+type;
-        })
-      }else{
-         this.$http.get(`http://datainfo.duapp.com/shopdata/updatecar.php?userID=lxr&goodsID=${id}&number=1`).then(res=>{
-           //删除，li 加class  itemRemove
-           //this.$refs
-            var el =this.$refs["cart-list"].$refs["item"+index][0];
-            el.className = "cart-item itemRemove";
-            el.addEventListener("animationend",()=>{
-              //动画结束以后删除
-              this.cartData.splice(index,1,{})
-            })
-         })
 
-      }
-
-    }
   },
   mounted(){
-     this.$http.jsonp("http://datainfo.duapp.com/shopdata/getCar.php?userID=lxr").then(res=>{
-            console.log(res.data)
-            this.cartData=res.data;
-    })
+    var cartParams = JSON.stringify({"opt":"5","cmd":"3","is_login":"1","is_change_checked":"1","v":"1","os":"wap","uid":"hs20162285188","uname":"17610859110","code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD0C361839089615CA4E4287DEF36349762F2D689059976B735D1ED7F9818C9AF86F01D0B4D8389820DF02ADF82172E09C71F398409C0D87BB","imei":"dasd1223423we","time_stamp":1498531414224,"crc":"b8b7448101db749ae76508ab9d851d34"})
+    this.$http.post("/mobilecart.ashx",cartParams,{
+      headers:{
+        "Content-Type":"application/x-www-form-urlencoded"
+      }
+    }).then(res=>{
+      console.log(res.data.data.list[0].goods[0].goods_list[0].goods_title)
+      console.log(res.data.data.list[0].goods[0])
+      this.cartData=res.data.data.list[0].goods[0].goods_list
+    });
   },
   computed:{
-        total:function(){
-            var totalPrice = 0;
-            var totalNum =0;
-            this.cartData.forEach(function(ele) {
-                //判断
-               if(ele.number){
-                  totalNum +=ele.number*1;
-                  totalPrice+=ele.number*ele.price*1;
-                  totalPrice=parseInt(totalPrice*100)/100;
-
-
-               }
-
-            });
-            return{
-                totalNum,
-                totalPrice
-            }
-        }
 
     }
 }
@@ -101,6 +64,7 @@ export default {
   .cart{
     height:100%;
     width:100%;
+    background-color: #f0f0f0;
   }
 .sub-header{height:40px;background:#ccc;line-height:40px;}
 .sub-header p{float:left;margin-left:20px;}

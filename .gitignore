@@ -6,3 +6,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+src\components\Index
+src\components\Mine

@@ -32,7 +32,24 @@ module.exports = {
         "target":"http://cms.aolaigo.com/Handler/app_ActivityHandler.ashx",
         "changeOrigin":true,
         "pathRewrite":{"^/ashx":""}
-      }
+      },
+      "/mobilecart":{
+        "target":"http://cartapi.aolaigo.com/handler/mobilecart.ashx",
+        "changeOrigin":true,
+        "pathRewrite":{"^/mobilecart":""}
+      },
+      "/ordersubmitpageaapi_new":{
+        "target":"http://orderapi.aolaigo.com/v2/ordersubmitpageaapi_new.ashx",
+        "changeOrigin":true,
+        "pathRewrite":{"^/ordersubmitpageaapi_new":""}
+      },
+      "/callback":{
+        "target":"http://productapi.aolaigo.com/handler/command.ashx?callback",
+        "changeOrigin":true,
+        "pathRewrite":{"^/callback":""}
+      },
+
+
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

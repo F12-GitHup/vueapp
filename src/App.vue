@@ -39,7 +39,7 @@ a{text-decoration:none;
         opacity: 1;
 
     }
-    80%{
+    99%{
 
 
         opacity: 0;

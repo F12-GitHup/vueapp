@@ -19,7 +19,7 @@ export default {
 *{margin:0;padding:0;}
 li{list-style:none;}
 .header {
-   position:fixed; left:0; top:0; width:100%; height:49px; line-height:49px;border-bottom:1px solid #e8e8e8;background:#fff;z-index:10;
+   position:fixed; left:0; top:0; width:100%; height:49px;text-align: center; line-height:49px;border-bottom:1px solid #e8e8e8;background:#fff;z-index:10;
 }
 .header ul{display:flex;}
 .header ul li{flex:1;

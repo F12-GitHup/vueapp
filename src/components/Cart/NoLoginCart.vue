@@ -9,7 +9,7 @@
       <img src="../../../img/cartNone_02.png" width="100%">
     </div>
     <div class="toHome">
-      <a class="goHomebtn" href="/app/index.html">去首页逛逛</a>
+      <a class="goHomebtn" href="#/">去首页逛逛</a>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@
 <script>
 export default {
   name: 'my-no-login-cart',
+
   data () {
     return {
     }
@@ -33,7 +34,7 @@ export default {
   .topMsg {
     background-color: #fafafa;
     overflow: hidden;
-    margin-top: 10px;
+    padding-top: 10px;
   }
   .topMsgC {
     width: 70%;
