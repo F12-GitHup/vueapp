@@ -48,6 +48,16 @@ module.exports = {
         "changeOrigin":true,
         "pathRewrite":{"^/callback":""}
       },
+      "/member":{
+        "target":"http://memberapi.aolaigo.com/appmember.ashx",
+        "changeOrigin":true,
+        "pathRewrite":{"^/member":""}
+      },
+      "/getCode":{
+        "target":"http://member.aolaigo.com/handlers/validcode.ashx",
+        "changeOrigin":true,
+        "pathRewrite":{"^/getCode":""}
+      }
 
 
     },
