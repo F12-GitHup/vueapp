@@ -8,7 +8,8 @@ import Tijiaodingdan from '@/components/Cart/Tijiaodingdan/Tijiaodingdan'
 import Detail from'@/components/Index/Detail/Index'
 import Order from '@/components/Mine/Order/Order'
 import Manage from '@/components/Mine/Manage/Manage'
-
+import Login from '@/components/Mine/Login/Login'
+import Register from '@/components/Mine/Register/Register'
 Vue.use(Router)
 
 export default new Router({
@@ -53,7 +54,18 @@ export default new Router({
       path: '/manage',
       name: 'Manage',
       component: Manage
-    }
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+
 
 
 
