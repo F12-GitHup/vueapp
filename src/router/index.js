@@ -10,6 +10,9 @@ import Order from '@/components/Mine/Order/Order'
 import Manage from '@/components/Mine/Manage/Manage'
 import Login from '@/components/Mine/Login/Login'
 import Register from '@/components/Mine/Register/Register'
+import Ouseshepin from '@/components/Ouseshepin/Index'
+import Renqiyoupin from '@/components/Renqiyoupin/Index'
+
 Vue.use(Router)
 
 export default new Router({
@@ -65,7 +68,16 @@ export default new Router({
       name: 'Register',
       component: Register
     },
-
+    {
+      path: '/ouseshepin',
+      name: 'Ouseshepin',
+      component: Ouseshepin
+    },
+    {
+      path: '/renqiyoupin',
+      name: 'Renqiyoupin',
+      component: Renqiyoupin
+    },
 
 
 
