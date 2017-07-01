@@ -19,9 +19,10 @@
                  :isCheckall='isCheckall' :id='index' ref='items'></i>
             </div>
             <div class="cartProjImg">
-              <a href="product-detail.html?skuId=50600677012588">
+              <router-link :to="{path:'/detail',query: {id:ele.goods_id}}">
+
                 <img :src="ele.goods_img">
-              </a>
+              </router-link>
             </div>
             <div class="cartProjContent ">
               <div class="cartProjName ">
@@ -39,11 +40,11 @@
                   <div class="sprice ">￥ {{ele.goods_default}}</div>
                 </div>
                 <div class="cartProjNum">
-                  <span class=" " @click="changeNum(1,index)"
+                  <span class=" " @click="changeNum(1,index,ele.store)"
                         :class="write.state?'doNum':'addNum '"
                   >+</span>
                   <div class="num" > {{ele.goods_amount}}</div>
-                  <span class=" " @click="changeNum(-1,index)"
+                  <span class=" " @click="changeNum(-1,index,ele.store)"
                         :class="write.state?'doNum':'addNum '"
                   >-</span>
                   <div class="stocks">库存<span class="store">{{ele.store}}</span>件</div>
@@ -69,8 +70,8 @@
         全选
       </div>
       <div class="realTotal " style="line-height: 39px;">
-        <div class="realTotal-r ">合计：￥{{totalPrice}}</div>
-        <div class="realTotal-y "></div>
+        <div class="realTotal-r " v-if="!isCheckall.state">合计：￥{{totalPrice}}</div>
+        <div class="realTotal-r " v-if="isCheckall.state" >合计：￥{{Price}}</div>
         <div class="youhuiDetail " style="display:none"></div>
       </div>
       <a class="toSubmitBtn" @click="goBuy" >去结算</a>
@@ -93,7 +94,8 @@
 </template>
 
 <script>
-
+  import { MessageBox } from 'mint-ui';
+  import { Toast } from 'mint-ui';
 export default {
   name: 'my-cart-list',
   props:{
@@ -108,8 +110,10 @@ export default {
       return{
         isCheckall:{state:true},//全选状态值
         write:{state:true},//编辑开关状态值
+        Price:0,
         totalPrice:0,
         flag:true,//单选状态值
+
       }
     },
 //各种方法
@@ -133,7 +137,7 @@ export default {
         }
       })
 //把要传送的参数变成json格式传送
-      var cartParams = JSON.stringify({"opt":"5","cmd":"4","v":"1","is_login":"1","goods_code":arr,"os":"wap","uid":"hs20162285188","uname":"17610859110","code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FDFEF74D70FBE38A8FC2D54883132175A032A57C54CA2A79E6DF0AF654BB9245D2D71AF3828601E17F206EF2A69DACA85F92BB1735F22B2533","imei":"dasd1223423we","time_stamp":1498617702987,"crc":"2bc9d8cefb58587f909c2eac8191c3f7"})
+      var cartParams = JSON.stringify({"opt":"5","cmd":"4","v":"1","is_login":"1","goods_code":arr,"os":"wap","uid":localStorage.uid,"uname":localStorage.username,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FDFEF74D70FBE38A8FC2D54883132175A032A57C54CA2A79E6DF0AF654BB9245D2D71AF3828601E17F206EF2A69DACA85F92BB1735F22B2533","imei":"dasd1223423we","time_stamp":1498617702987,"crc":"2bc9d8cefb58587f909c2eac8191c3f7"})
       this.$http.post("/mobilecart.ashx",cartParams,{
         headers:{
           "Content-Type":"application/x-www-form-urlencoded"
@@ -143,7 +147,7 @@ export default {
       });
 
 //      传送到订单信息中，还未实现
-      var cartParams = JSON.stringify({"opt":"6","cmd":"0","os":"wap","uid":"hs20162285188","uname":"17610859110","goods_code":arr,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FDD0B008D831BDA9DB2467635753A389A15F0F47CB22073DBFF1C74612306C12D55F874D2B49DEBA6D8C446AADC609E6D92734112729B12FB6","imei":"dasd1223423we","time_stamp":1498632931270,"crc":"84c1c09ceef94208b1ec120ff3456cf8"})
+      var cartParams = JSON.stringify({"opt":"6","cmd":"0","os":"wap","uid":localStorage.uid,"uname":localStorage.username,"goods_code":arr,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FDD0B008D831BDA9DB2467635753A389A15F0F47CB22073DBFF1C74612306C12D55F874D2B49DEBA6D8C446AADC609E6D92734112729B12FB6","imei":"dasd1223423we","time_stamp":1498632931270,"crc":"84c1c09ceef94208b1ec120ff3456cf8"})
       this.$http.post("/ordersubmitpageaapi_new.ashx",cartParams,{
         headers:{
           "Content-Type":"application/x-www-form-urlencoded"
@@ -162,34 +166,41 @@ export default {
         var that=this
       //下面函数体中this要改变，提前存放到that中，还可以用箭头函数方式防止this指向改变
         this.cartData.forEach(function(ele,index) {
-          console.log(that.$refs.items[index].classList.length)
           if(that.$refs.items[index].classList.length==3){
-            console.log(ele.goods_id)
             arr.push(ele.goods_id)
           }
         })
 //      判断是否一个没选
       if(arr.length!=0){
-        var cartParams = JSON.stringify({"opt":"5","cmd":"18","v":"1","is_login":"1","goods_id_list":arr,"os":"wap","uid":"hs20162285188","uname":"17610859110","code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD77A469454430C90E8BF2D55D897A597CE4FF1B68AD11EA3B311FD49BB74E668F2FC521413025F9ED5F450A6A64453AF5C92C4D1E72A86D23","imei":"dasd1223423we","time_stamp":1498566264528,"crc":"ca26dd93529c3c5ad413fe55c112b6b4"})
+        var cartParams = JSON.stringify({"opt":"5","cmd":"18","v":"1","is_login":"1","goods_id_list":arr,"os":"wap","uid":localStorage.uid,"uname":localStorage.username,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD77A469454430C90E8BF2D55D897A597CE4FF1B68AD11EA3B311FD49BB74E668F2FC521413025F9ED5F450A6A64453AF5C92C4D1E72A86D23","imei":"dasd1223423we","time_stamp":1498566264528,"crc":"ca26dd93529c3c5ad413fe55c112b6b4"})
         this.$http.post("/mobilecart.ashx",cartParams,{
           headers:{
             "Content-Type":"application/x-www-form-urlencoded"
           }
         }).then(res=>{
-         alert("收藏成功")
+
+          Toast({
+            message: '收藏成功',
+            iconClass: 'icon icon-success'
+          });
         });
       }else{
         alert("请选择商品")
       }
     },
 //    改变购物车中商品数量的方法
-    changeNum(type,index){
+    changeNum(type,index,store){
       if(type){
         var num = this.cartData[index].goods_amount*1;
         if(this.cartData[index].goods_amount==1&&type==-1){
           return
         }else{
-          this.cartData[index].goods_amount=num+type;
+          if(num<store){
+            this.cartData[index].goods_amount=num+type;
+          }else if(type==-1){
+            this.cartData[index].goods_amount=num+type;
+          }
+
         }
       }else{
 //        删除商品
@@ -200,23 +211,24 @@ export default {
         this.cartData.forEach(function(ele,index) {
           if(that.$refs.items[index].classList.length==3){
 //判断被选中的删除
+
+            var el =that.$refs["cart-list"][index];
+            el.className = "cart-item itempxove";
+            el.addEventListener("animationend",()=>{
+              //动画结束以后删除
+              this.cartData.splice(0,1,{})
+            })
             obj={"cart_main_code":ele.cart_main_code,"cart_detail_code":ele.cart_detail_code,"goods_selected":"1"}
           }
           arr.push(obj)
         })
-        var cartParams = JSON.stringify({"opt":"5","cmd":"16","v":"1","is_login":"1","goods_code":arr,"os":"wap","uid":"hs20162285188","uname":"17610859110","code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD77A469454430C90E8BF2D55D897A597CE4FF1B68AD11EA3B311FD49BB74E668F2FC521413025F9ED5F450A6A64453AF5C92C4D1E72A86D23","imei":"dasd1223423we","time_stamp":1498566264528,"crc":"ca26dd93529c3c5ad413fe55c112b6b4"})
+        var cartParams = JSON.stringify({"opt":"5","cmd":"16","v":"1","is_login":"1","goods_code":arr,"os":"wap","uid":localStorage.uid,"uname":localStorage.username,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD77A469454430C90E8BF2D55D897A597CE4FF1B68AD11EA3B311FD49BB74E668F2FC521413025F9ED5F450A6A64453AF5C92C4D1E72A86D23","imei":"dasd1223423we","time_stamp":1498566264528,"crc":"ca26dd93529c3c5ad413fe55c112b6b4"})
         this.$http.post("/mobilecart.ashx",cartParams,{
           headers:{
             "Content-Type":"application/x-www-form-urlencoded"
           }
         }).then(res=>{
-//          添加删除动画
-          var el =this.$refs["cart-list"][0];
-          el.className = "cart-item itemRemove";
-          el.addEventListener("animationend",()=>{
-            //动画结束以后删除
-            this.cartData.splice(0,1,{})
-          })
+
         });
       }
     },
@@ -224,14 +236,40 @@ export default {
     checkO(index){
       if(this.flag){
         this.$refs["items"][index].className = "iconfont icon-duihao1 colorRed1 ";
-        this.flag=!this.flag
+
       }else{
         this.$refs["items"][index].className = " noCheckAll ";
-        this.flag=!this.flag
+
       }
+      this.flag=!this.flag
+          var sum=0
+      var num=0
+        var that=this
+        //下面函数体中this要改变，提前存放到that中，还可以用箭头函数方式防止this指向改变
+        this.cartData.forEach(function(ele,index) {
+//        通过res方式找到每个绑定的i标签判断类名的个数确定是否被选中
+          if(that.$refs.items[index].classList.length==3){
+            sum+= that.cartData[index].goods_pice * that.cartData[index].goods_amount
+          }
+          if(that.$refs.items[index].classList.length==3){
+           num++
+          }
+        })
+          if(num==this.cartData.length){
+            console.log(num)
+            console.log(this.cartData.length)
+            this.isCheckall.state=false
+          }else{
+            this.isCheckall.state=true
+
+          }
+        this.Price=parseInt(sum)
+
+
     },
 //    全选方法
     checkall(){
+      this.Price=0
       var sum = 0;
       var that=this;
       //下面函数体中this要改变，提前存放到that中，还可以用箭头函数方式防止this指向改变
@@ -243,8 +281,10 @@ export default {
           sum += that.cartData[index].goods_pice * that.cartData[index].goods_amount;
         }
       })
+
      this.totalPrice=parseInt(sum)
 //      点击切换状态值
+      this.flag=false
       this.isCheckall.state=!this.isCheckall.state;
     },
 //    编辑的方法
@@ -259,7 +299,7 @@ export default {
            obj={"cart_main_code":ele.cart_main_code,"cart_detail_code":ele.cart_detail_code,"buy_qty":ele.goods_amount}
            arr.push(obj)
         })
-        var cartParams = JSON.stringify({"opt":"5","cmd":"13","v":"1","is_login":"1","goods_code":arr,"os":"wap","uid":"hs20162285188","uname":"17610859110","code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD0C361839089615CA4E4287DEF36349762F2D689059976B735D1ED7F9818C9AF86F01D0B4D8389820DF02ADF82172E09C71F398409C0D87BB","imei":"dasd1223423we","time_stamp":1498556673405,"crc":"4683cb6eac030ed282308aec321724f6"})
+        var cartParams = JSON.stringify({"opt":"5","cmd":"13","v":"1","is_login":"1","goods_code":arr,"os":"wap","uid":localStorage.uid,"uname":localStorage.username,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD0C361839089615CA4E4287DEF36349762F2D689059976B735D1ED7F9818C9AF86F01D0B4D8389820DF02ADF82172E09C71F398409C0D87BB","imei":"dasd1223423we","time_stamp":1498556673405,"crc":"4683cb6eac030ed282308aec321724f6"})
         this.$http.post("/mobilecart.ashx",cartParams,{
           headers:{
             "Content-Type":"application/x-www-form-urlencoded"
@@ -295,6 +335,7 @@ export default {
     background-color: #fff;
     padding-top: 10px;
     width:100%;
+    margin-bottom: 110px;
   }
   .cartProjs {
     padding: 0 15px;

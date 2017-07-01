@@ -9,7 +9,8 @@
       </router-link>
     </mt-header>
     <my-content>
-     <div class="box">
+      <!--第一步-->
+     <div class="box" v-if="sjh">
       <div class="con">
         <ul>
           <li class="item">
@@ -33,9 +34,41 @@
       </div>
       <div class="login-btn" @click="next">下一步</div>
     </div>
+      <!--第二步-->
+      <div class="box" v-if="sjyzm">
+        <div class="con">
+          <ul>
+            <li class="item">
+
+
+                <input type="text" class="sjcode" placeholder="请输入验证码" ref="sjcode">
+
+            </li>
+          </ul>
+        </div>
+        <div class="login-btn" @click="next2">下一步</div>
+      </div>
+      <!--第三步-->
+      <div class="box" v-if="passw">
+        <div class="con">
+          <ul>
+            <li class="item">
+              <label for="">
+                <input type="password" class="psw" placeholder="请输入密码" ref="psw">
+              </label>
+            </li>
+            <li class="item">
+              <label for="">
+                <input type="password" class="ppsw" placeholder="请输入确认密码" ref="ppsw">
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="login-btn" @click="next3">完成</div>
+      </div>
     </my-content>
   </div>
- 
+
 </template>
 <script>
 import axios from 'axios';
@@ -46,7 +79,12 @@ export default {
     return {
       //记录唯一的name和时间戳t
       num:0,
-      t:0
+      t:0,
+      sjh:true,
+      sjyzm:false,
+      passw:false,
+      phone:"",
+      sjcode:""
     }
   },
   methods: {
@@ -56,12 +94,13 @@ export default {
         this.t =  Math.random()*200000000000;
         //模拟原网站验证码的唯一name和时间戳t   必要保证一致  才能获取对应验证码正确不正确
         this.$refs.imgSrc.src = 'http://member.aolaigo.com/handlers/validcode.ashx?name='+this.num+"&_t="+this.t;
-      
+
     },
     next(){
       var phone = this.$refs.phone.value;
       var code = this.$refs.inp.value;
-      //传入的form data 
+      this.phone=phone;
+      //传入的form data
       var params = JSON.stringify({"opt":1,"cmd":1,"os":"wap","uid":"","name":phone,"validcode":code,"imei":this.num,"isSend":1})
       axios.post("/member",params,{
         headers:{
@@ -71,12 +110,12 @@ export default {
         //先判断是否同意协议
         //判断是否被选中
         var isCheck = this.$refs.checkbox.checked;
-        
+
         console.log(isCheck)
         if(isCheck){
           //被选中  才提示其他内容
 
-          //收到返回数据  判断是否输入正确  
+          //收到返回数据  判断是否输入正确
           console.log(res.request.response)
           var i = JSON.parse(res.request.response).error;
           var msg = '';
@@ -87,17 +126,45 @@ export default {
             MessageBox('提示', msg);
           //否则就是正确  ，可能需要保存用户信息
           }else{
-            MessageBox('提示', '发送验证码ing....');
+            MessageBox('提示', '验证码已发送');
+            this.sjh=false;
+            this.sjyzm=true;
           }
         }else{
           MessageBox('提示', "请先同意用户协议！！");
         }
 
-
-        
-
       })
-    }
+    },
+    next2(){
+      this.sjyzm=false;
+      this.passw=true;
+      var sjcode = this.$refs.sjcode.value;
+      this.sjcode=sjcode;
+    },
+    next3(){
+
+      var psw = this.$refs.psw.value;
+      var params = JSON.stringify({"opt":1,"cmd":2,"identifying_code":this.sjcode,"name":this.phone,"password":psw,"os":"wap","uid":"","channel":"4"})
+      axios.post("/member",params,{
+        headers:{
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res=>{
+        console.log(res)
+        var i = JSON.parse(res.request.response).error;
+        var msg = '';
+        if(i==(-1)){
+          //得到准确的错误信息
+          msg = JSON.parse(res.request.response).msg;
+          //提示框 提示错误的信息
+          MessageBox('提示', msg);
+          //否则就是正确  ，可能需要保存用户信息
+        }else{
+          window.location.href="/login"
+        }
+      })
+      }
   },
   mounted(){
     this.changeImg()
@@ -134,7 +201,7 @@ export default {
   width:70px;
   height:30px;
   float:right;
-  margin:10px 0 0 0 
+  margin:10px 0 0 0
 }
 .con .item input{
   float:left;

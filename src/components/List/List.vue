@@ -5,7 +5,7 @@
        <a href="javascript:;"  slot="tit">列表</a>
         <a href="javascript:;"  slot="right">购物车</a>
     </my-header>
-    <my-footer></my-footer>
+    <my-footer :selected="selected"></my-footer>
     <my-content>
           <class-list :class-data = "classData" @get-list = "getList"></class-list>
           <Product-list :list-data="listData"></Product-list>
@@ -24,6 +24,7 @@ export default {
   name: 'list',
   data () {
     return {
+      selected:"列表",
        classData:[],
        listData:[]
     }

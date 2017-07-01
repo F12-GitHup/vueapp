@@ -12,6 +12,8 @@ import Login from '@/components/Mine/Login/Login'
 import Register from '@/components/Mine/Register/Register'
 import Ouseshepin from '@/components/Ouseshepin/Index'
 import Renqiyoupin from '@/components/Renqiyoupin/Index'
+import Search from '@/components/Index/Search'
+import SearchResult from '@/components/Index/Search-result'
 
 Vue.use(Router)
 
@@ -78,6 +80,17 @@ export default new Router({
       name: 'Renqiyoupin',
       component: Renqiyoupin
     },
+    {
+      path:'/search',
+      name:"Search",
+      component:Search
+    }
+    ,
+    {
+      path:'/search-result',
+      name:"Search-result",
+      component:SearchResult
+    }
 
 
 

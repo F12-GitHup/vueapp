@@ -5,10 +5,12 @@
             <span class="icon-description">扫一扫</span>
         </div>
         <div class="mid">
-            <div class="search-wrap">
-                <span class="search-icon iconfont">&#xe629;</span>
-                <span>搜索 商品 分类 品牌</span>
-            </div>
+            <router-link to="/search">
+                <div class="search-wrap">
+                    <span class="search-icon iconfont">&#xe629;</span>
+                    <span>搜索 商品 分类 品牌</span>
+                </div>
+            </router-link>
         </div>
         <div class="right">
             <span class="iconfont">&#xe61f;</span>
@@ -19,7 +21,7 @@
 
 <script>
     export default({
-        name:"index-header"
+        name:"index-header",
     })
 </script>
 

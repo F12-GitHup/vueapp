@@ -57,7 +57,13 @@ module.exports = {
         "target":"http://member.aolaigo.com/handlers/validcode.ashx",
         "changeOrigin":true,
         "pathRewrite":{"^/getCode":""}
+      },
+      "/order":{
+        "target":"http://orderapi.aolaigo.com/v2/orderlistapi.ashx",
+        "changeOrigin":true,
+        "pathRewrite":{"^/order":""}
       }
+
 
 
     },

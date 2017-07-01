@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header " ref="header">
    <ul>
       <li class="headerBack"><slot name="left" ></slot></li>
       <li class="tit"><slot name="tit" ></slot></li>
@@ -44,4 +44,5 @@ li{list-style:none;}
     line-height: 49px;
     font-size: 14px;
   }
+
 </style>

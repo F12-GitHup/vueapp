@@ -51,7 +51,8 @@
 
       </div>
     </div>
-    <div class=" getMore"><i class="iconfont icon-xiangshang1"></i>收起</div>
+    <div class=" getMore" v-if="!shouqiState" @click="shouqi"><i class="iconfont icon-xiangshang-copy-copy"></i>展开更多</div>
+    <div class=" getMore" v-if="shouqiState" @click="shouqi"><i class="iconfont icon-xiangshang1"></i>收起</div>
 
 
   </div>
@@ -69,6 +70,12 @@ export default {
   },
   data () {
     return {
+      shouqiState:true
+    }
+  },
+  methods:{
+    shouqi(){
+      this.shouqiState=!this.shouqiState
     }
   }
 }

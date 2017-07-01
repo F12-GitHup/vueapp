@@ -39,16 +39,17 @@
     </div>
     </my-content>
   </div>
- 
+
 </template>
 
 <script>
 import { MessageBox } from 'mint-ui';
+import { Toast } from 'mint-ui';
 export default {
   name: 'login',
   data () {
     return {
-      
+
     }
   },
   methods: {
@@ -75,16 +76,25 @@ export default {
         }else{
           //登陆成功  保存用户名到localStroage
           window.localStorage.username = username;
-          location.href="/index"
+          window.localStorage.uid = res.data.data.uid;
+
+          Toast({
+            message: '登录成功',
+            iconClass: 'icon icon-success'
+          });
+          setTimeout(function(){
+            location.href="#/"
+          },500)
+
         }
-        
+
       })
     },
     //显示密码
     showPsw(){
       //判断是否被选中
       var isCheck = this.$refs.checkbox.checked;
-      
+
       console.log(isCheck)
       if(isCheck){
         //密码输入框  s是否显示密码

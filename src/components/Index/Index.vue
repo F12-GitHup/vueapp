@@ -2,7 +2,7 @@
   <div class="index">
     <v-header></v-header>
     <v-sub-header :class-data="classData"></v-sub-header>
-    <my-footer></my-footer>
+    <my-footer   :selected="selected"></my-footer>
     <my-content>
        <div class="swiper-wrap">
         <mt-swipe :auto="4000">
@@ -38,8 +38,9 @@ export default {
       channelData:[],
       wishData:[],
       pinzhiData:[],
-      haowuData:[]
-     
+      haowuData:[],
+      selected:"首页",
+
     }
   },
  name:"index",
@@ -64,7 +65,7 @@ export default {
    }).then(res=>{
      this.classData = res.data.data[0].cons;
    });
-   
+
    var Params = JSON.stringify({"os":"wap","opt":1,"cmd":1,"id":"3952"})
    this.$http.post("/ashx",Params,{
       headers:{

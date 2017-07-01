@@ -3,9 +3,9 @@
     <my-header>
        <span slot="tit">欧瑟奢品</span>
     </my-header>
-    <my-footer></my-footer>
+    <my-footer :selected="selected"></my-footer>
     <my-content>
-          <mt-navbar v-model="selected">
+          <mt-navbar v-model="sel">
             <mt-tab-item id="0" >{{classData[0].title}}</mt-tab-item>
             <mt-tab-item id="1" >{{classData[1].title}}</mt-tab-item>
             <mt-tab-item id="2" >{{classData[2].title}}</mt-tab-item>
@@ -42,10 +42,11 @@ export default {
   name: 'ouseshepin',
   data () {
     return {
+      selected:"欧瑟奢品",
        classData:[],
        picData:[],
        listData:[],
-       selected:"0"
+       sel:"0"
     }
   },
   components:{
@@ -54,7 +55,7 @@ export default {
     "v-content3":Content3
   },
   methods:{
-   
+
 
   },
   mounted(){
@@ -68,7 +69,7 @@ export default {
             }).then(res=>{
              // console.log(res.data.data[0].cons)
               this.classData = res.data.data[0].cons;
-            }); 
+            });
             //获取内容数据
             var Params = JSON.stringify({"os":"wap","opt":1,"cmd":1,"id":"4003"})
             this.$http.post("/ashx",Params,{
@@ -81,7 +82,7 @@ export default {
             });
 
 
-      
+
   }
 }
 </script>

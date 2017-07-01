@@ -1,9 +1,9 @@
 <template>
   <div class="mine">
-    <mt-header fixed title="我的奥莱购" class="header">
-      <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
+      <my-header>
+        <a href="javascript:;" slot="tit">我的奥莱购</a>
+        <a href="javascript:;" slot="right" @click='outLigin'>注销账号</a>
+      </my-header>
     </mt-header>
 
     <my-footer></my-footer>
@@ -26,8 +26,8 @@
               <div class="user-control">
                 账户管理&nbsp;>
               </div>
-            </router-link>  
-            
+            </router-link>
+
           </div>
      </div>
 
@@ -35,13 +35,13 @@
      <some-list></some-list>
      <for-you ref="forYou" v-if="isTrue"></for-you>
     </my-content>
-    
+
   </div>
- 
+
 </template>
 
 <script>
-//引入order-list 
+//引入order-list
 import OrderList from './OrderList'
 import SomeList from './SomeList'
 import ForYou from './ForYou'
@@ -51,11 +51,16 @@ export default {
   data(){
     return {
       src:'',
-      username:'登录去吧，骚年',
+      username:'',
       isTrue:true
     }
   },
   methods: {
+    outLigin(){
+      localStorage.removeItem("username");
+      localStorage.removeItem("uid");
+      window.location.href="#/login"
+},
     toLogin(){
       //通过localStorage.username判断用户是否登录，登录的话 不执行跳转事件。未登录就执行
       var uname = window.localStorage.username
@@ -66,8 +71,6 @@ export default {
   mounted(){
     //判断是否已经登录   根据localStorage.username
     var uname = window.localStorage.username
-
-    console.log(uname)
     if(!uname){
         this.username = "登录去吧，骚年";
         //未登录头像图片隐藏
@@ -75,18 +78,19 @@ export default {
         //未登录为您推荐不显示
         this.isTrue = false
     }else{
-      var params = JSON.stringify({"opt":3,"cmd":1,"os":"wap","uid":"hs20162285188","uname":uname,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD1F959A283EEE1D61787033022FA7CCA6B3FD919E975F78EFFFAD22D2BE21F5F2DA6795AD8187C9F1D12248FF4F1D996BF89B4A8FFDABBFDF","imei":"dasd1223423we","time_stamp":1498526615023,"crc":"eb0988271e5282f966543cdf73aaf7d8"})
+      var params = JSON.stringify({"opt":3,"cmd":1,"os":"wap","uid":localStorage.uid,"uname":uname,"code":"08012C58D35B65BB1446FA3CAEA4CE49DDFBC877C56D7E7A8F64A82015ED96A876130D05CD5EEFCB2D10B20BAC3E39F1B3E70E27BD94E8A430C7DF80BC549CA66DF4B7DCE676BEA4B751D1A950C78F68A98D7F0233602DC1B750642D4662A2634982DC8EED9281BFA72031C8BD203A8DFC62E56A61FDEE6B074A7501BBA17077D4A7EA982D89F5E5F7E3BC527A73E53BA1135BB86E762FC6381C124386788E03209121017C83B9DB70CA7465A1107CBA6152E81B93FC5A273F30AA4A75220A0096F5092C29F73DE4B1F5ECDA91B20F10E710D0E864D07CE5369FC289F0C35DE747E4582191E6E688B5503C6A6A58B6FD1F959A283EEE1D61787033022FA7CCA6B3FD919E975F78EFFFAD22D2BE21F5F2DA6795AD8187C9F1D12248FF4F1D996BF89B4A8FFDABBFDF","imei":"dasd1223423we","time_stamp":1498526615023,"crc":"eb0988271e5282f966543cdf73aaf7d8"})
         this.$http.post("/member",params,{
           headers:{
             "Content-Type":"application/x-www-form-urlencoded"
           }
         }).then(res=>{
-          console.log(res)
           this.username = res.body.data.tel_no,
           this.src = res.body.data.icon_img
+      console.log(res.body.data.icon_img)
+
         })
     }
-    
+
   },
   components:{
     "order-list":OrderList,

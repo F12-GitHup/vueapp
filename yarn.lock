@@ -315,9 +315,9 @@ babel-helper-regex@^6.24.1:
     babel-types "^6.24.1"
     lodash "^4.2.0"
 
-babel-helper-remap-async-to-generator@^6.24.1:
+babel-helper-pxap-async-to-generator@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-remap-async-to-generator/-/babel-helper-remap-async-to-generator-6.24.1.tgz#5ec581827ad723fecdd381f1c928390676e4551b"
+  resolved "https://registry.yarnpkg.com/babel-helper-pxap-async-to-generator/-/babel-helper-pxap-async-to-generator-6.24.1.tgz#5ec581827ad723fecdd381f1c928390676e4551b"
   dependencies:
     babel-helper-function-name "^6.24.1"
     babel-runtime "^6.22.0"
@@ -404,7 +404,7 @@ babel-plugin-transform-async-generator-functions@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-async-generator-functions/-/babel-plugin-transform-async-generator-functions-6.24.1.tgz#f058900145fd3e9907a6ddf28da59f215258a5db"
   dependencies:
-    babel-helper-remap-async-to-generator "^6.24.1"
+    babel-helper-pxap-async-to-generator "^6.24.1"
     babel-plugin-syntax-async-generators "^6.5.0"
     babel-runtime "^6.22.0"
 
@@ -412,7 +412,7 @@ babel-plugin-transform-async-to-generator@^6.22.0, babel-plugin-transform-async-
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-async-to-generator/-/babel-plugin-transform-async-to-generator-6.24.1.tgz#6536e378aff6cb1d5517ac0e40eb3e9fc8d08761"
   dependencies:
-    babel-helper-remap-async-to-generator "^6.24.1"
+    babel-helper-pxap-async-to-generator "^6.24.1"
     babel-plugin-syntax-async-functions "^6.8.0"
     babel-runtime "^6.22.0"
 
@@ -2672,7 +2672,7 @@ normalize-path@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-2.1.1.tgz#1ab28b556e198363a8c1a6f7e6fa20137fe6aed9"
   dependencies:
-    remove-trailing-separator "^1.0.1"
+    pxove-trailing-separator "^1.0.1"
 
 normalize-range@^0.1.2:
   version "0.1.2"
@@ -3411,9 +3411,9 @@ relateurl@0.2.x:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
 
-remove-trailing-separator@^1.0.1:
+pxove-trailing-separator@^1.0.1:
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.0.2.tgz#69b062d978727ad14dc6b56ba4ab772fd8d70511"
+  resolved "https://registry.yarnpkg.com/pxove-trailing-separator/-/pxove-trailing-separator-1.0.2.tgz#69b062d978727ad14dc6b56ba4ab772fd8d70511"
 
 renderkid@^2.0.1:
   version "2.0.1"

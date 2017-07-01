@@ -2,7 +2,7 @@
   <div class="noLoginCart">
     <div class="topMsg">
       <div class=" topMsgC ">登陆后您才可以进行更多操作，并同步电脑与手机购物车的商品哦～</div>
-      <div class=" topMsgB"><a class="goLoginbtn" href="login.html">去登录</a></div>
+      <div class=" topMsgB"><a class="goLoginbtn" href="#/login">去登录</a></div>
     </div>
 
     <div class="mt20">

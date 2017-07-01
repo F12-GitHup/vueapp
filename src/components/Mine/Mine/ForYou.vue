@@ -9,14 +9,17 @@
 
     <div class="for-list">
       <ul>
-        <li v-for="(data,index) in listData" key="index" class="list-item">
-          <img :src="'http://img4.aolaigo.com/group1/'+listData[index]['product_image']" alt="">
-          <p class="goods-name">{{listData[index].product_name}}</p>
-          <div class="price">
-            <span class="p-price">￥{{listData[index]['p_price']}}</span>
-            <del class="m-price">￥{{listData[index]['m_price']}}</del>
-            <i class="iconfont icon-shoucang"></i>
-          </div>
+        <li v-for="(data,index) in listData" key="index"
+           class="list-item" >
+          <router-link :to="{path:'/detail',query: {id:data['sku_id']}}">
+            <img :src="'http://img4.aolaigo.com/group1/'+data['product_image']" alt="">
+            <p class="goods-name">{{data['product_name']}}</p>
+            <div class="price">
+              <span class="p-price">￥{{data['p_price']}}</span>
+              <del class="m-price">￥{{data['m_price']}}</del>
+              <i class="iconfont icon-shoucang"></i>
+            </div>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -43,6 +46,7 @@ export default {
       }
     }).then(res=>{
       console.log(res)
+      
       this.listData = res.body.data.data
     })
   }
@@ -97,8 +101,18 @@ export default {
   color:red;
   font-weight:900
 }
+.list-item{
+  position:relative;
+  padding-bottom:20px;
+}
 .list-item .iconfont{
   color:red;
   float:right
+}
+.price{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%
 }
 </style>

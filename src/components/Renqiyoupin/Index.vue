@@ -4,7 +4,7 @@
         <a href="#/renqiyoupin" slot="left" class="iconfont">&#xe607;</a>
        <span slot="tit">人气优品</span>
     </my-header>
-    <my-footer></my-footer>
+    <my-footer :selected="selected"> </my-footer>
     <my-content>
       <ul class="list">
         <li v-for="(ele,index) in listData" :key="index">
@@ -31,6 +31,7 @@ export default {
   name: 'ouseshepin',
   data () {
     return {
+      selected:"人气优品",
        listData:[]
     }
   },
@@ -38,7 +39,7 @@ export default {
     "class-list":ClassList,
   },
   methods:{
-   
+
 
   },
   mounted(){
@@ -52,7 +53,7 @@ export default {
               console.log(res.data.data[0].cons)
               this.listData = res.data.data[0].cons
             });
-      
+
   }
 }
 </script>

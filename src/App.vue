@@ -30,11 +30,11 @@ html,body{
 li{list-style:none;}
 a{text-decoration:none;
   color: #666;}
-.itemRemove {
+.itempxove {
     overflow: hidden;
-    -webkit-animation:removeItem .8s both cubic-bezier(.24,.01,.38,.97);
-    animation: removeItem .8s both cubic-bezier(.24,.01,.38,.97)}
-@-webkit-keyframes removeItem{
+    -webkit-animation:pxoveItem .8s both cubic-bezier(.24,.01,.38,.97);
+    animation: pxoveItem .8s both cubic-bezier(.24,.01,.38,.97)}
+@-webkit-keyframes pxoveItem{
     0% {
         opacity: 1;
 
@@ -69,7 +69,7 @@ a{text-decoration:none;
         height: 0;
     }
 }
-@keyframes removeItem{
+@keyframes pxoveItem{
     0% {
         opacity: 1;
 

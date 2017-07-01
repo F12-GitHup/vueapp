@@ -1,11 +1,11 @@
 <template>
     <div class="detail">
 
-        <v-footer></v-footer>
+        <v-footer :detail-data="detailData"></v-footer>
        <my-content>
            <!-- 轮播图-->
-         <div class="swiper-wrap">
-            <mt-swipe :auto="4000">
+         <div class="swiper-wrap" >
+            <mt-swipe   :auto="0">
                 <mt-swipe-item v-for="data in detailData.imgUrls">
                 <img :src="'http://img5.aolaigo.com/group1/'+data" alt="">
                 </mt-swipe-item>
@@ -78,6 +78,7 @@
             this.$http.get("/callback=jQuery22407218586266387472_1498547211307&cmd=getsku&v=4&skuId="+id+"&_=1498547211308").then(res=>{
                 console.log(res.data.Data)
                 this.detailData = res.data.Data
+              console.log(this.detailData.sku)
             })
             //找到头部组件内的Dom节点
            var header = this.$refs["header"].$refs.header
