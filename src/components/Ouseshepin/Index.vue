@@ -13,7 +13,7 @@
             <mt-tab-item id="4" >{{classData[4].title}}</mt-tab-item>
           </mt-navbar>
           <!-- tab-container -->
-          <mt-tab-container v-model="selected">
+          <mt-tab-container v-model="sel">
             <mt-tab-container-item id="0">
                 <v-content1 :pic-data = "picData"></v-content1>
             </mt-tab-container-item>
